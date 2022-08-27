@@ -1,0 +1,82 @@
+FormView.js
+
+/categories, //TODO: update request URL
+/questions', //TODO: update request URL
+
+
+QuestionView.js
+
+`/questions?page=${this.state.page}`, //TODO: update request URL
+
+`/categories/${id}/questions`, //TODO: update request URL
+
+`/questions`, //TODO: update request URL
+
+`/questions/${id}`, //TODO: update request URL
+
+`/categories`, //TODO: update request URL
+	
+
+
+
+For Windows cmd, use set instead of export:
+
+> set FLASK_APP=flaskr
+> set FLASK_ENV=development
+> flask run
+For Windows PowerShell, use $env:instead of export:
+
+> $env:FLASK_APP = "flaskr"
+> $env:FLASK_ENV = "development"
+> flask run
+
+
+pip install -r requirements.txt
+
+03:12 21-08-2022
+
+Creating a virtualenv and activating it
+---------------------------------------------------
+
+Try deleting the virtualenv you created. Then create a new virtualenv with:
+	virtualenv flask
+Then:
+
+cd flask
+Now let's activate the virtualenv
+
+source bin/activate
+Now you should see (flask) on the left of the command line.
+
+Edit: In windows there is no "source" that's a linux thing, instead execute the activate.bat file, here I do it using Powershell: PS C:\DEV\aProject> & .\Flask\Scripts\activate)
+
+Let's install flask:
+
+pip install flask
+
+pip install -r requirements.txt
+
+
+
+03:13 21-08-2022
+
+python -m flask run 	- Use this command instead of 'flask run'
+
+
+
+curl -X POST -H "Content-Type: application/json" -d '{"answer":"Thiruvalluvar","category":4,"difficulty":2,"question":"Who wrote Thirukkural?"}' http://127.0.0.1:5000/questions
+curl -X GET http://127.0.0.1:5000/questions
+curl -X POST -H "Content-Type: application/json" -d '{"searchTerm":"movie"}' http://127.0.0.1:5000/questions/search
+curl -X DELETE http://127.0.0.1:5000/questions/45
+curl -X POST  -d '{\"answer\":\"Thiruvalluvar\",\"category\":4,\"difficulty\":2,\"question\":\"Who wrote Thirukkural\?\"}' http://127.0.0.1:5000/questions
+
+
+Postman
+-------
+
+http://127.0.0.1:5000/questions/search
+
+
+    "previous_questions": [5, 9, 23],
+{"searchTerm": "author"
+

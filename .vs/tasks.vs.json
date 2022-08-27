@@ -1,0 +1,10 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskLabel": "task-cd0037-API-Development-and-Documentation-project",
+      "appliesTo": "/",
+      "type": "launch"
+    }
+  ]
+}

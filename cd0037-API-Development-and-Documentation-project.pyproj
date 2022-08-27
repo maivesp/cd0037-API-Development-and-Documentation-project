@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{c401ce51-6a13-4c70-9fc7-d29ca8739c2c}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile />
+    <SearchPath />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId>MSBuild|env|$(MSBuildProjectFullPath)</InterpreterId>
+    <TestFramework>Pytest</TestFramework>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="backend\requirements.txt" />
+    <Content Include="frontend\public\art.svg" />
+    <Content Include="frontend\public\delete.png" />
+    <Content Include="frontend\public\entertainment.svg" />
+    <Content Include="frontend\public\favicon.ico" />
+    <Content Include="frontend\public\geography.svg" />
+    <Content Include="frontend\public\history.svg" />
+    <Content Include="frontend\public\index.html" />
+    <Content Include="frontend\public\science.svg" />
+    <Content Include="frontend\public\sports.svg" />
+    <Content Include="frontend\src\App.js" />
+    <Content Include="frontend\src\App.test.js" />
+    <Content Include="frontend\src\components\FormView.js" />
+    <Content Include="frontend\src\components\Header.js" />
+    <Content Include="frontend\src\components\Question.js" />
+    <Content Include="frontend\src\components\QuestionView.js" />
+    <Content Include="frontend\src\components\QuizView.js" />
+    <Content Include="frontend\src\components\Search.js" />
+    <Content Include="frontend\src\index.js" />
+    <Content Include="frontend\src\stylesheets\App.css" />
+    <Content Include="frontend\src\stylesheets\FormView.css" />
+    <Content Include="frontend\src\stylesheets\Header.css" />
+    <Content Include="frontend\src\stylesheets\index.css" />
+    <Content Include="frontend\src\stylesheets\Question.css" />
+    <Content Include="frontend\src\stylesheets\QuizView.css" />
+    <Content Include="LICENSE.txt" />
+    <Content Include="Notes.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="backend\config.py" />
+    <Compile Include="backend\flaskr\__init__.py" />
+    <Compile Include="backend\models.py" />
+    <Compile Include="backend\test_flaskr.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="backend" />
+    <Folder Include="backend\flaskr" />
+    <Folder Include="frontend\" />
+    <Folder Include="frontend\public" />
+    <Folder Include="frontend\src" />
+    <Folder Include="frontend\src\components" />
+    <Folder Include="frontend\src\stylesheets" />
+  </ItemGroup>
+  <ItemGroup>
+    <Interpreter Include="env\">
+      <Id>env</Id>
+      <Version>3.7</Version>
+      <Description>env (Python 3.7 (64-bit))</Description>
+      <InterpreterPath>Scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+      <Architecture>X64</Architecture>
+    </Interpreter>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+</Project>

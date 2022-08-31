@@ -64,6 +64,7 @@ def create_app(test_config=None):
         formatted_questions = [question.format() for question in questions]
  
         return jsonify({
+            "success": True,
             "questions": formatted_questions[start:end],
             "totalQuestions": len(formatted_questions),
             "categories": categories_dict,
@@ -74,18 +75,26 @@ def create_app(test_config=None):
     def delete_question(id):
         try:
             question=Question.query.filter(Question.id == id).one_or_none()
-            if question is None:
-                abort(404)
-                    
-            question.delete()
-            return jsonify({
-                "success": True,
-                "id": id
-                })
         except:
             abort(422)
 
-    
+        if question is None:
+            print(question)
+            print("id"+ str(id))
+            import traceback
+            traceback.print_exc()
+            abort(404)
+        
+        try:
+            question.delete()
+            return jsonify({
+            "success": True,
+            "id": id
+            })
+
+        except:
+            abort(422)
+
     @app.route("/questions", methods=["POST"])
     def add_new_question():
 

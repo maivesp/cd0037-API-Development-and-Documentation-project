@@ -1,4 +1,4 @@
-from ast import NotIn
+from ast import NotIn, Try
 from operator import not_, truediv
 import os
 from pickle import TRUE
@@ -27,7 +27,10 @@ def create_app(test_config=None):
 
     @app.route("/categories",methods=["GET"])
     def get_categories():
-        categories = Category.query.all()
+        try:
+            categories = Category.query.all()
+        except:
+            abort(422)
         categories_dict={}
         for category in categories:
             categories_dict[category.id]= category.type
@@ -52,8 +55,9 @@ def create_app(test_config=None):
         questions = Question.query.all()
         categories = Category.query.all()
 
-        #formatted_categories = [category.format() for category in categories]
-        categories = Category.query.all()
+        if len(questions[start:end]) == 0:
+           abort(404)
+
         categories_dict={}
         for category in categories:
             categories_dict[category.id]= category.type
@@ -72,9 +76,11 @@ def create_app(test_config=None):
             question=Question.query.filter(Question.id == id).one_or_none()
             if question is None:
                 abort(404)
+                    
             question.delete()
             return jsonify({
                 "success": True,
+                "id": id
                 })
         except:
             abort(422)
@@ -83,17 +89,20 @@ def create_app(test_config=None):
     @app.route("/questions", methods=["POST"])
     def add_new_question():
 
-        try:
-            body=request.get_json()
-
-        except:
-            abort(400)
-
+        body=request.get_json()
+       
         srchterm=body.get("searchTerm")
 
         if srchterm is not None:
-            ques_list = Question.query.filter(Question.question.ilike(f"%{srchterm}%"))
+            try:
+                ques_list = Question.query.filter(Question.question.ilike(f"%{srchterm}%"))
+            except:
+                abort(422)
+
             formatted_questions = [question.format() for question in ques_list]     
+
+            if len(formatted_questions) == 0:
+                abort(404)
 
             return jsonify({
                 "success": True,
@@ -101,27 +110,40 @@ def create_app(test_config=None):
                 "totalQuestions":len(formatted_questions),
                 "current_category": None
                         })
+        else:
+            new_question = body.get("question")
+            new_answer = body.get("answer")
+            new_category = body.get("category")
+            new_difficulty = body.get("difficult")
 
-        question = Question(question = body.get("question"),
-                            answer = body.get("answer"),
-                            category = body.get("category"),
-                            difficulty = body.get("difficulty"))
-        question.insert()
-       
-        return jsonify({
-            "success": True 
-            })
+            try:
+                question = Question(question = new_question,
+                                    answer = new_answer,
+                                    category = new_category,
+                                    difficulty = new_difficulty)
+                question.insert()
+            except:
+                abort(422)
+
+            return jsonify({
+                "success": True 
+                })
    
     @app.route("/categories/<int:id>/questions",methods=["GET"])
     def getquesforcategory(id):
-        
-        questions = Question.query.filter(Question.category == id)
+        try:
+
+            questions = Question.query.filter(Question.category == id).all()
+            category = Category.query.get(id)
+        except:
+            abort(422)
+
+        if questions and category is None:
+            abort(404)
 
         formatted_questions = [question.format() for question in questions]
-
-        category = Category.query.get(id)
-
         return jsonify({"success": True,
+            "success": True,
             "questions": formatted_questions,
             "totalQuestions":  len(formatted_questions),
             "currentCategory": category.type
@@ -135,14 +157,25 @@ def create_app(test_config=None):
         prev_ques = body.get('previous_questions')
         quiz_cat = body.get('quiz_category')
 
+
         if quiz_cat['id'] !=  0:
-            questions = Question.query.filter(Question.category == quiz_cat['id']).all()
+            try:
+                questions = Question.query.filter(Question.category == quiz_cat['id']).all()
+            except:
+                abort(422)
         else:
-            questions = Question.query.all()
+            try:
+                questions = Question.query.all()
+            except:
+                abort(422)
+
+        if len(questions) == 0:
+            abort(404)
 
         for question in questions:
             if question.id not in prev_ques:
                 return jsonify({
+                    "success": True,
                     'question': {
                     'id': question.id,
                     'question': question.question,
@@ -155,10 +188,27 @@ def create_app(test_config=None):
             'error': True
             })
 
-
+    
     """
     @TODO:
     Create error handlers for all expected errors
     including 404 and 422.
 """
+    @app.errorhandler(422)
+    def unprocessable(error):
+        return jsonify({
+            "success": False, 
+            "error": 422,
+            "message": "Unprocessable"
+            }), 422
+
+    @app.errorhandler(404)
+    def not_found(error):
+        return jsonify({
+            "success": False, 
+            "error": 404,
+            "message": "Not Found"
+            }), 404
+    return app
+
     return app

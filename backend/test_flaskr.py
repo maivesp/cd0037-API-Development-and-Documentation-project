@@ -30,7 +30,6 @@ class TriviaTestCase(unittest.TestCase):
         self.searchTerm1 = {"searchTerm": "Prabhu"}
         self.quiz_req = {"previous_questions": [12,23,53,55,78,79,80],'quiz_category': 1}
         self.quiz_req1 = {"previous_questions": [12,23,53,55,78,79,80,81,82],'quiz_category': 1}
-        self.quiz_req1 = {"previous_questions": [12,23,53,55,78,79,80],'quiz_category': 1}
 
 
     def tearDown(self):
@@ -78,7 +77,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(res.status_code,404)
         self.assertEqual(data['success'],False)
         self.assertEqual(data['error'],404)
-        self.assertEqual(data['message'],"Not Found")
+        self.assertEqual(data['message'],"Resource Not Found")
 
     def test_questions_delete(self):
         res=self.client().delete("/questions/9")
@@ -95,7 +94,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(res.status_code,404)
         self.assertEqual(data['success'],False)
         self.assertEqual(data['error'],404)
-        self.assertEqual(data['message'],"Not Found")
+        self.assertEqual(data['message'],"Resource Not Found")
 
     def test_create_new_question(self):
         res = self.client().post("/questions", json=self.new_question)
@@ -121,7 +120,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(res.status_code,404)
         self.assertEqual(data['success'],False)
         self.assertEqual(data['error'],404)
-        self.assertEqual(data['message'],"Not Found")
+        self.assertEqual(data['message'],"Resource Not Found")
 
     def test_get_questions_by_category(self):
         res=self.client().get("/category/1/questions")
@@ -140,7 +139,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(res.status_code,404)
         self.assertEqual(data['success'],False)
         self.assertEqual(data['error'],404)
-        self.assertEqual(data['message'],"Not Found")    
+        self.assertEqual(data['message'],"Resource Not Found")    
         
     def test_get_quizzes_found(self):
         res=self.client().get("/quizes",json=self.quiz_req)
@@ -156,7 +155,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(res.status_code,404)
         self.assertEqual(data['success'],False)
         self.assertEqual(data['error'],404)
-        self.assertEqual(data['message'],"Not Found")
+        self.assertEqual(data['message'],"Resource Not Found")
        
 # Make the tests conveniently"currentCategory" executable
 if __name__ == "__main__":

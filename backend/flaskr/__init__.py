@@ -6,7 +6,7 @@ from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import cross_origin, CORS
 import random
-
+import traceback
 from models import setup_db, Question, Category
 
 QUESTIONS_PER_PAGE = 10
@@ -79,9 +79,6 @@ def create_app(test_config=None):
             abort(422)
 
         if question is None:
-            print(question)
-            print("id"+ str(id))
-            import traceback
             traceback.print_exc()
             abort(404)
         
@@ -98,8 +95,8 @@ def create_app(test_config=None):
     @app.route("/questions", methods=["POST"])
     def add_new_question():
 
-        body=request.get_json()
-       
+        body=request.get_json() 
+
         srchterm=body.get("searchTerm")
 
         if srchterm is not None:
@@ -166,6 +163,7 @@ def create_app(test_config=None):
         prev_ques = body.get('previous_questions')
         quiz_cat = body.get('quiz_category')
 
+        print(quiz_cat)
 
         if quiz_cat['id'] !=  0:
             try:
@@ -216,7 +214,7 @@ def create_app(test_config=None):
         return jsonify({
             "success": False, 
             "error": 404,
-            "message": "Not Found"
+            "message": "Resource Not Found"
             }), 404
     return app
 

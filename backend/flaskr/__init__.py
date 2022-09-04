@@ -1,4 +1,4 @@
-from ast import NotIn, Try
+from ast import Try
 from operator import not_, truediv
 import os
 from pickle import TRUE
@@ -163,13 +163,12 @@ def create_app(test_config=None):
         prev_ques = body.get('previous_questions')
         quiz_cat = body.get('quiz_category')
 
-        print(quiz_cat)
 
         if quiz_cat['id'] !=  0:
             try:
                 questions = Question.query.filter(Question.category == quiz_cat['id']).all()
             except:
-                abort(422)
+                abort(422)      
         else:
             try:
                 questions = Question.query.all()

@@ -65,10 +65,18 @@ python -m flask run 	- Use this command instead of 'flask run'
 
 
 curl -X POST -H "Content-Type: application/json" -d '{"answer":"Thiruvalluvar","category":4,"difficulty":2,"question":"Who wrote Thirukkural?"}' http://127.0.0.1:5000/questions
+
+
+curl "127.0.0.1:5000/questions" -X POST -H "Content-Type: application/json" --data "{\"answer\": "\layaraja\", \"category\": 4,\"difficulty\": 2,\"question\": \"Who is the best music composer in India\"}"
+curl -X POST -H "Content-Type: application/json" --data "{\"answer\": "\layaraja\", \"category\": 4,\"difficulty\": 2,\"question\": \"Who is the best music composer in India?\"}" "//127.0.0.1:5000/questions" 
+
+
+curl "http://127.0.0.1:5000/questions" -X POST -H "Content-Type: application/json" --data "{\"searchTerm\": \"poet\"}"
+
 curl -X GET http://127.0.0.1:5000/questions
-curl -X POST -H "Content-Type: application/json" -d '{"searchTerm":"movie"}' http://127.0.0.1:5000/questions/search
+
 curl -X DELETE http://127.0.0.1:5000/questions/45
-curl -X POST  -d '{\"answer\":\"Thiruvalluvar\",\"category\":4,\"difficulty\":2,\"question\":\"Who wrote Thirukkural\?\"}' http://127.0.0.1:5000/questions
+
 
 
 Postman

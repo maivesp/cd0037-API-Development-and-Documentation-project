@@ -23,6 +23,9 @@ General:
 Returns a list of categories, success value, and total categories
 
 Sample: curl http://127.0.0.1:5000/categories
+
+Response Body:
+--------------
 {
   "categories": {
     "1": "Science",
@@ -40,6 +43,10 @@ GET/questions
 Returns a list of questions, success value, Total questions, dictionary of categories and current category
 
 Sample: curl http:/127.0.0.1:5000/questions
+
+
+Response Body:
+--------------
 
 {
   "categories": {
@@ -133,6 +140,10 @@ Returns a list of questions for the page number passed as query parm, success va
 
 Sample: curl http:/127.0.0.1:5000/questions?page=4
 
+
+Response Body:
+--------------
+
 E:\Udacity\cd0037-API-Development-and-Documentation-project\backend>curl http:/127.0.0.1:5000/questions?page=4
 {
   "categories": {
@@ -175,8 +186,14 @@ POST /questions
 General:
 Returns a list of questions that matches the search term passed, along with the success value, Total no of matched questions and Current Category.
 
-curl -X POST -H "Content-Type: application/json" -d '{"searchTerm":"author"}' http://127.0.0.1:5000/questions    
+curl "http://127.0.0.1:5000/questions" -X POST -H "Content-Type: application/json" --data "{\"searchTerm\": \"poet\"}"
 
+Request Body:
+-------------
+{"searchTerm": "poet"}
+
+Response Body:
+--------------
 {
     "current_category": null,
     "questions": [
@@ -192,6 +209,28 @@ curl -X POST -H "Content-Type: application/json" -d '{"searchTerm":"author"}' ht
     "totalQuestions": 1
 }
 
+POST /questions
+---------------
+General:
+Creates a new question using the answer, category, difficulty, and question that is passed in the request body and returns the sucess value
+
+curl "127.0.0.1:5000/questions" -X POST -H "Content-Type: application/json" --data "{\"answer\": "\layaraja\", \"category\": 4,\"difficulty\": 2,\"question\": \"Who is the best music composer in India\"}"  
+
+Request Body:
+-------------
+
+{
+"answer": "Thiruvalluvar", 
+"category": 4, 
+"difficulty": 2, 
+"question": "Who is the greatest poet in the world'?"
+
+}
+Response Body:
+--------------
+{"success":true}
+
+
 
 GET /categories/<int:id>/questions
 ----------------------------------
@@ -201,6 +240,9 @@ Returns a list of questions that matches the category that is passed, along with
 
 curl -X GET http://127.0.0.1:5000/categories/1/questions
 
+
+Response Body:
+--------------
 {
   "currentCategory": "Science",
   "questions": [
@@ -238,6 +280,7 @@ General:
 Returns the next question that is not in the list of previous questions thaat is passed. If the quiz cateogry is passed as zero then list of all questions irrespective of categories is returned.
 
 Request Body:
+--------------
 {
     "previous_questions": [
         5,
@@ -249,7 +292,9 @@ Request Body:
     }
 }
 
-Resonse
+
+Response Body:
+--------------
 {
     "question": {
         "answer": "George Washington Carver",
